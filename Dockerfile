@@ -2,9 +2,7 @@ FROM node:16-alpine AS base
 
 WORKDIR /usr/app
 
-# Install env + dependencies
-
-COPY .env .
+# Install dependencies
 
 COPY package.json .
 COPY yarn.lock .
@@ -19,8 +17,9 @@ COPY . .
 RUN yarn build
 
 # Copy and run
-FROM base AS prod
+FROM base AS runner
 
+COPY .env .
 COPY --from=builder /usr/app/dist ./dist
 
 CMD yarn start
