@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+
+  bot-template:
+    container_name: bot-template
+    image: bot-template:latest
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
