@@ -9,6 +9,7 @@ import {
   UnknownComponentType,
   UnknownInteractionType
 } from "interactions.ts";
+import { createClient } from "redis";
 import Ping from "./commands/Ping";
 
 const keys = ["CLIENT_ID", "TOKEN", "PUBLIC_KEY", "PORT"];
@@ -18,67 +19,76 @@ if (keys.some((key) => !(key in process.env))) {
   process.exit(1);
 }
 
-const app = new DiscordApplication({
-  clientId: process.env.CLIENT_ID as string,
-  token: process.env.TOKEN as string,
-  publicKey: process.env.PUBLIC_KEY as string,
+(async () => {
+  const redisClient = createClient();
 
-  removeUnregistered: true
-});
+  await redisClient.connect();
 
-app.commands.load([new Ping()], true);
+  const app = new DiscordApplication({
+    clientId: process.env.CLIENT_ID as string,
+    token: process.env.TOKEN as string,
+    publicKey: process.env.PUBLIC_KEY as string,
 
-const server = fastify();
-server.register(rawBody);
+    cache: {
+      get: (key: string) => redisClient.get(key),
+      set: (key: string, ttl: number, value: string) => redisClient.setEx(key, ttl, value)
+    }
+  });
 
-server.post("/", async (request, reply) => {
-  const signature = request.headers["x-signature-ed25519"];
-  const timestamp = request.headers["x-signature-timestamp"];
+  app.commands.register([new Ping()], true);
 
-  if (typeof request.rawBody !== "string" || typeof signature !== "string" || typeof timestamp !== "string") {
-    return reply.code(400).send({
-      error: "Invalid request"
-    });
-  }
+  const server = fastify();
+  server.register(rawBody);
 
-  try {
-    await app.handleInteraction(
-      async (response) => {
-        reply.code(200).send(response);
-      },
-      request.rawBody,
-      timestamp,
-      signature
-    );
-  } catch (err) {
-    if (err instanceof UnauthorizedInteraction) {
-      console.error("Unauthorized Interaction");
-      return reply.code(401).send();
+  server.post("/", async (request, reply) => {
+    const signature = request.headers["x-signature-ed25519"];
+    const timestamp = request.headers["x-signature-timestamp"];
+
+    if (typeof request.rawBody !== "string" || typeof signature !== "string" || typeof timestamp !== "string") {
+      return reply.code(400).send({
+        error: "Invalid request"
+      });
     }
 
-    if (err instanceof InteractionHandlerTimedOut) {
-      console.error("Interaction Handler Timed Out");
+    try {
+      await app.handleInteraction(
+        async (response) => {
+          reply.code(200).send(response);
+        },
+        request.rawBody,
+        timestamp,
+        signature
+      );
+    } catch (err) {
+      if (err instanceof UnauthorizedInteraction) {
+        console.error("Unauthorized Interaction");
+        return reply.code(401).send();
+      }
 
-      return reply.code(408).send();
+      if (err instanceof InteractionHandlerTimedOut) {
+        console.error("Interaction Handler Timed Out");
+
+        return reply.code(408).send();
+      }
+
+      if (
+        err instanceof UnknownInteractionType ||
+        err instanceof UnknownApplicationCommandType ||
+        err instanceof UnknownComponentType
+      ) {
+        console.error("Unknown Interaction - Library may be out of date.");
+        console.dir(err.interaction);
+
+        return reply.code(400).send();
+      }
+
+      console.error(err);
     }
+  });
 
-    if (
-      err instanceof UnknownInteractionType ||
-      err instanceof UnknownApplicationCommandType ||
-      err instanceof UnknownComponentType
-    ) {
-      console.error("Unknown Interaction - Library may be out of date.");
-      console.dir(err.interaction);
+  const address = "0.0.0.0";
+  const port = process.env.PORT as string;
 
-      return reply.code(400).send();
-    }
-
-    console.error(err);
-  }
-});
-
-const address = "0.0.0.0";
-const port = process.env.PORT as string;
-
-server.listen(port, address);
-console.log(`Listening for interactions on ${address}:${port}.`);
+  server.listen(port, address);
+  console.log(`Listening for interactions on ${address}:${port}.`);
+})();
