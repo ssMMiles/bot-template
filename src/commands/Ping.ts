@@ -1,9 +1,9 @@
-import { ButtonStyle } from "discord-api-types/v10";
 import {
   ActionRowBuilder,
   Button,
   ButtonBuilder,
   ButtonContext,
+  ButtonStyle,
   EmbedBuilder,
   ISlashCommand,
   MessageBuilder,
@@ -16,13 +16,13 @@ type TestButtonState = {
   word: string;
 };
 
-export default class Ping implements ISlashCommand {
-  public builder = new SlashCommandBuilder("ping", "Simple ping command.");
-
-  public options = [new SlashCommandStringOption("word", "Enter a word to store with the button.")];
+export class Ping implements ISlashCommand {
+  public builder = new SlashCommandBuilder("ping", "Simple ping command.").addStringOption(
+    new SlashCommandStringOption("word", "Enter a word to store with the button.")
+  );
 
   public handler = async (ctx: SlashCommandContext): Promise<void> => {
-    const word = (ctx.options.get("test")?.value as string) ?? "Hello World!";
+    const word = (ctx.options.get("word")?.value as string) ?? "Hello World!";
     const button = await ctx.manager.components.createInstance("test", { word: word });
 
     return ctx.reply(

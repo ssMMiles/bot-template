@@ -426,11 +426,6 @@ discord-api-types@^0.26.1:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.26.1.tgz#726f766ddc37d60da95740991d22cb6ef2ed787b"
   integrity sha512-T5PdMQ+Y1MEECYMV5wmyi9VEYPagEDEi4S0amgsszpWY0VB9JJ/hEvM6BgLhbdnKky4gfmZEXtEEtojN8ZKJQQ==
 
-discord-api-types@^0.32.0:
-  version "0.32.0"
-  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.32.0.tgz#e3880d6695372070b7ddbbd2899b2ed6ffd9dea0"
-  integrity sha512-i6HyCwWRocvtIcM7hamI3eQTCxLN/UvWtm/JktaXRSWDmASfhHam2juhej+e4U/Q/Fni1uUlyloMCBTL04Dl6Q==
-
 discord-api-types@^0.32.1:
   version "0.32.1"
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.32.1.tgz#c468ec31a1ac2565673619ba1e0d35f01d339a65"
@@ -442,11 +437,6 @@ doctrine@^3.0.0:
   integrity sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==
   dependencies:
     esutils "^2.0.2"
-
-dotenv@^13.0.0:
-  version "13.0.1"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-13.0.1.tgz#cf43980abe07accfa5c3ee321fc7ddc551975e96"
-  integrity sha512-u3KAkK+VHk01+D7V6SFtSJl2JScX1Yi4anKsKXS4oT8s8LnL5xgJe7XFAZ1bSsOfAmxU54OwOuhaLv3v70oXgw==
 
 dotenv@^16.0.0:
   version "16.0.0"
@@ -849,14 +839,13 @@ inherits@2, inherits@2.0.4:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-interactions.ts@^1.0.23:
-  version "1.0.23"
-  resolved "https://registry.yarnpkg.com/interactions.ts/-/interactions.ts-1.0.23.tgz#e8af0e5c55290a1f6fc6ee3efd2400bf618f0d80"
-  integrity sha512-Bi5CV65SVxuQeklBm6aaRi8klGpeprXd40LlBpIR/ckL1zlom1o9s7lBheZ4Ld4+VTZFOJqBCV+PL0wOJOH8YQ==
+interactions.ts@^1.0.26:
+  version "1.0.26"
+  resolved "https://registry.yarnpkg.com/interactions.ts/-/interactions.ts-1.0.26.tgz#212780f7d73a1463e8b52e0eaa1c158ee36e5ebc"
+  integrity sha512-Ct2DYecCoTnHYabAlQ5j6O+/AOUIA+ms31yrK/4FVEe3sVjoJjkeScX0Jgud7tFzvqDpp4YT6ngSagBke2wTiQ==
   dependencies:
     "@discordjs/rest" "^0.3.0"
     discord-api-types "^0.32.1"
-    dotenv "^13.0.0"
     tweetnacl "^1.0.3"
     uuid "^8.3.2"
 
@@ -1371,8 +1360,3 @@ yallist@4.0.0, yallist@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
-
-zod@^3.14.4:
-  version "3.14.4"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.14.4.tgz#e678fe9e5469f4663165a5c35c8f3dc66334a5d6"
-  integrity sha512-U9BFLb2GO34Sfo9IUYp0w3wJLlmcyGoMd75qU9yf+DrdGA4kEx6e+l9KOkAlyUO0PSQzZCa3TR4qVlcmwqSDuw==

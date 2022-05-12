@@ -10,7 +10,7 @@ import {
   UnknownInteractionType
 } from "interactions.ts";
 import { createClient } from "redis";
-import Ping from "./commands/Ping";
+import { Config, Ping } from "./commands";
 
 const keys = ["CLIENT_ID", "TOKEN", "PUBLIC_KEY", "PORT"];
 
@@ -35,7 +35,7 @@ if (keys.some((key) => !(key in process.env))) {
     }
   });
 
-  app.commands.register([new Ping()], true);
+  await app.commands.register([new Ping(), new Config()], false);
 
   const server = fastify();
   server.register(rawBody);

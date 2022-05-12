@@ -1,6 +1,6 @@
 {
   "name": "bot-template",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A basic Discord bot template using @ssMMiles/interactions.ts",
   "main": "dist/index.js",
   "types": "dist/src/index.d.ts",
@@ -15,10 +15,11 @@
   "author": "ssMMiles",
   "license": "MIT",
   "dependencies": {
+    "discord-api-types": "^0.32.1",
     "dotenv": "^16.0.0",
     "fastify": "^3.27.4",
     "fastify-raw-body": "^3.2.0",
-    "interactions.ts": "^1.0.23",
+    "interactions.ts": "^1.0.26",
     "redis": "^4.1.0"
   },
   "devDependencies": {
@@ -26,10 +27,8 @@
     "@types/node-fetch": "^2.6.1",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
-    "discord-api-types": "^0.32.0",
     "eslint": "^8.12.0",
     "prettier": "^2.5.1",
-    "typescript": "^4.5.4",
-    "zod": "^3.14.4"
+    "typescript": "^4.5.4"
   }
 }
