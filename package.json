@@ -19,7 +19,8 @@
     "dotenv": "^16.0.0",
     "fastify": "^3.27.4",
     "fastify-raw-body": "^3.2.0",
-    "interactions.ts": "^1.0.26",
+    "form-data": "^4.0.0",
+    "interactions.ts": "^1.0.42",
     "redis": "^4.1.0"
   },
   "devDependencies": {

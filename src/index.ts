@@ -3,6 +3,7 @@ import fastify from "fastify";
 import rawBody from "fastify-raw-body";
 import {
   DiscordApplication,
+  InteractionHandlerNotFound,
   InteractionHandlerTimedOut,
   UnauthorizedInteraction,
   UnknownApplicationCommandType,
@@ -53,6 +54,11 @@ if (keys.some((key) => !(key in process.env))) {
     try {
       await app.handleInteraction(
         async (response) => {
+          if ("getHeaders" in response) {
+            reply.headers(response.getHeaders()).code(200).send(response);
+            return;
+          }
+
           reply.code(200).send(response);
         },
         request.rawBody,
@@ -63,6 +69,13 @@ if (keys.some((key) => !(key in process.env))) {
       if (err instanceof UnauthorizedInteraction) {
         console.error("Unauthorized Interaction");
         return reply.code(401).send();
+      }
+
+      if (err instanceof InteractionHandlerNotFound) {
+        console.error("Interaction Handler Not Found");
+        console.dir(err.interaction);
+
+        return reply.code(404).send();
       }
 
       if (err instanceof InteractionHandlerTimedOut) {

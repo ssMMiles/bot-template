@@ -839,14 +839,14 @@ inherits@2, inherits@2.0.4:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-interactions.ts@^1.0.26:
-  version "1.0.26"
-  resolved "https://registry.yarnpkg.com/interactions.ts/-/interactions.ts-1.0.26.tgz#212780f7d73a1463e8b52e0eaa1c158ee36e5ebc"
-  integrity sha512-Ct2DYecCoTnHYabAlQ5j6O+/AOUIA+ms31yrK/4FVEe3sVjoJjkeScX0Jgud7tFzvqDpp4YT6ngSagBke2wTiQ==
+interactions.ts@^1.0.42:
+  version "1.0.42"
+  resolved "https://registry.yarnpkg.com/interactions.ts/-/interactions.ts-1.0.42.tgz#757b28f20d67c212514061614095fe7421136f4d"
+  integrity sha512-JIMVe25b/BPFl7nhiGbNIA7Cr8DhKiD32c0bZH3izjT9lfyUZXWVL9S/hvHNgeZ1Wd56xJRbh4cO5ZsE17tE7w==
   dependencies:
     "@discordjs/rest" "^0.3.0"
     discord-api-types "^0.32.1"
-    tweetnacl "^1.0.3"
+    form-data "^4.0.0"
     uuid "^8.3.2"
 
 ipaddr.js@1.9.1:
@@ -1281,11 +1281,6 @@ tsutils@^3.21.0:
   integrity sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==
   dependencies:
     tslib "^1.8.1"
-
-tweetnacl@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.3.tgz#ac0af71680458d8a6378d0d0d050ab1407d35596"
-  integrity sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"

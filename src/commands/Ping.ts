@@ -18,16 +18,16 @@ type TestButtonState = {
 
 export class Ping implements ISlashCommand {
   public builder = new SlashCommandBuilder("ping", "Simple ping command.").addStringOption(
-    new SlashCommandStringOption("word", "Enter a word to store with the button.")
+    new SlashCommandStringOption("word", "Enter a word to store with the button.").setRequired(true)
   );
 
   public handler = async (ctx: SlashCommandContext): Promise<void> => {
-    const word = (ctx.options.get("word")?.value as string) ?? "Hello World!";
-    const button = await ctx.manager.components.createInstance("test", { word: word });
+    const word = ctx.getStringOption("word");
+    const button = await ctx.createComponent("test", { word: word });
 
     return ctx.reply(
       new MessageBuilder()
-        .addEmbed(new EmbedBuilder().setTitle("Pong!"))
+        .addEmbeds(new EmbedBuilder().setTitle("Pong!"))
         .addComponents(new ActionRowBuilder().addComponents(button))
     );
   };
@@ -37,10 +37,8 @@ export class Ping implements ISlashCommand {
       "test",
       new ButtonBuilder().setEmoji({ name: "🔍" }).setStyle(ButtonStyle.Primary),
       async (ctx: ButtonContext<TestButtonState>): Promise<void> => {
-        const word = ctx.state ? ctx.state.word : "Component state has expired.";
-
-        return ctx.reply(new MessageBuilder().addEmbed(new EmbedBuilder().setTitle(word)));
+        return ctx.reply(new MessageBuilder().addEmbeds(new EmbedBuilder().setTitle(ctx.state.word)));
       }
-    ).setAllowExpired(true)
+    )
   ];
 }

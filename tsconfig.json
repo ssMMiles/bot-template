@@ -10,7 +10,9 @@
 
     "outDir": "./dist",
     "declaration": true,
-    "sourceMap": true
+    "sourceMap": true,
+
+    "esModuleInterop": true
   },
   "include": ["src", "tests"],
   "exclude": ["node_modules", "dist"]
