@@ -38,52 +38,51 @@ if (missing.length !== 0) {
     }
   });
 
-  await app.commands.register([new Ping(), new Config()], false);
+  await app.commands.register([new Ping(), new Config()]);
 
   const server = fastify();
   server.register(rawBody);
 
-  server.post("/", async (request, reply) => {
-    const signature = request.headers["x-signature-ed25519"];
-    const timestamp = request.headers["x-signature-timestamp"];
+  server.post("/", async (req, res) => {
+    const signature = req.headers["x-signature-ed25519"];
+    const timestamp = req.headers["x-signature-timestamp"];
 
-    if (typeof request.rawBody !== "string" || typeof signature !== "string" || typeof timestamp !== "string") {
-      return reply.code(400).send({
-        error: "Invalid request"
+    if (typeof req.rawBody !== "string" || typeof signature !== "string" || typeof timestamp !== "string") {
+      return res.code(400).send({
+        error: "Invalid req"
       });
     }
 
     try {
-      await app.handleInteraction(
-        async (response) => {
-          if ("getHeaders" in response) {
-            reply.headers(response.getHeaders()).code(200).send(response);
-            return;
-          }
+      const [response, handling] = app.handleInteraction(req.rawBody, timestamp, signature);
 
-          reply.code(200).send(response);
-        },
-        request.rawBody,
-        timestamp,
-        signature
-      );
+      response.then((response) => {
+        if ("getHeaders" in response) {
+          res.headers(response.getHeaders()).code(200).send(response);
+          return;
+        }
+
+        res.code(200).send(response);
+      });
+
+      await handling;
     } catch (err) {
       if (err instanceof UnauthorizedInteraction) {
         console.error("Unauthorized Interaction");
-        return reply.code(401).send();
+        return res.code(401).send();
       }
 
       if (err instanceof InteractionHandlerNotFound) {
         console.error("Interaction Handler Not Found");
         console.dir(err.interaction);
 
-        return reply.code(404).send();
+        return res.code(404).send();
       }
 
       if (err instanceof InteractionHandlerTimedOut) {
         console.error("Interaction Handler Timed Out");
 
-        return reply.code(408).send();
+        return res.code(408).send();
       }
 
       if (
@@ -94,7 +93,7 @@ if (missing.length !== 0) {
         console.error("Unknown Interaction - Library may be out of date.");
         console.dir(err.interaction);
 
-        return reply.code(400).send();
+        return res.code(400).send();
       }
 
       console.error(err);

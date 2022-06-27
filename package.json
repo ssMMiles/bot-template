@@ -20,7 +20,7 @@
     "fastify": "^3.27.4",
     "fastify-raw-body": "^3.2.0",
     "form-data": "^4.0.0",
-    "interactions.ts": "^1.0.42",
+    "interactions.ts": "^1.0.43",
     "redis": "^4.1.0"
   },
   "devDependencies": {

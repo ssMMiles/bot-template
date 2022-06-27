@@ -431,6 +431,11 @@ discord-api-types@^0.32.1:
   resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.32.1.tgz#c468ec31a1ac2565673619ba1e0d35f01d339a65"
   integrity sha512-/ewl0CPYT5xjOC+SJ7wADJKjtpZfiiUaYXOP/Ns54lnBcv4Xqa4iKSqRF/w1fjiUvWTYN9W8UuOiyCHtmu5fJw==
 
+discord-api-types@^0.35.0:
+  version "0.35.0"
+  resolved "https://registry.yarnpkg.com/discord-api-types/-/discord-api-types-0.35.0.tgz#85c6ea95f27580ad13b7a08444b16cb31d41e5e2"
+  integrity sha512-aaIbVgPk7OA3y/HdG00tRM2nB8B3sSPH6KXgamBLRrcAJEQ8XZJNNKeRr0WVzw/lprdpKHKuTNX1DNrYnD5cOw==
+
 doctrine@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-3.0.0.tgz#addebead72a6574db783639dc87a121773973961"
@@ -839,13 +844,13 @@ inherits@2, inherits@2.0.4:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-interactions.ts@^1.0.42:
-  version "1.0.42"
-  resolved "https://registry.yarnpkg.com/interactions.ts/-/interactions.ts-1.0.42.tgz#757b28f20d67c212514061614095fe7421136f4d"
-  integrity sha512-JIMVe25b/BPFl7nhiGbNIA7Cr8DhKiD32c0bZH3izjT9lfyUZXWVL9S/hvHNgeZ1Wd56xJRbh4cO5ZsE17tE7w==
+interactions.ts@^1.0.43:
+  version "1.0.43"
+  resolved "https://registry.yarnpkg.com/interactions.ts/-/interactions.ts-1.0.43.tgz#20aca290212d19b3357df56de39d47a7fbf063db"
+  integrity sha512-CY8qoaRjBjT1zuhiqPW4ogu/4GVWX9XJLdBxB8QBlQm1k95eohHubf7ABGZDdKQDXZ2T7bTIyg6t3OCsdpI6PA==
   dependencies:
     "@discordjs/rest" "^0.3.0"
-    discord-api-types "^0.32.1"
+    discord-api-types "^0.35.0"
     form-data "^4.0.0"
     uuid "^8.3.2"
 
