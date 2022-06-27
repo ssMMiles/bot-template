@@ -15,8 +15,10 @@ import { Config, Ping } from "./commands";
 
 const keys = ["CLIENT_ID", "TOKEN", "PUBLIC_KEY", "PORT"];
 
-if (keys.some((key) => !(key in process.env))) {
-  console.error(`Missing Enviroment Variables`);
+const missing = keys.filter((key) => !(key in process.env));
+
+if (missing.length !== 0) {
+  console.error(`Missing Enviroment Variable${missing.length > 1 ? "s" : ""}: ${missing.join(", ")}`);
   process.exit(1);
 }
 
