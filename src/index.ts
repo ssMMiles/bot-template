@@ -1,6 +1,3 @@
-import "dotenv/config";
-import fastify from "fastify";
-import rawBody from "fastify-raw-body";
 import {
   DiscordApplication,
   InteractionHandlerNotFound,
@@ -9,9 +6,12 @@ import {
   UnknownApplicationCommandType,
   UnknownComponentType,
   UnknownInteractionType
-} from "interactions.ts";
-import { createClient } from "redis";
-import { Config, Ping } from "./commands";
+} from "@discord-interactions/core";
+import "@discord-interactions/verify-node";
+import "dotenv/config";
+import fastify from "fastify";
+import rawBody from "fastify-raw-body";
+import { Config, Ping } from "./commands/index.js";
 
 const keys = ["CLIENT_ID", "TOKEN", "PUBLIC_KEY", "PORT"];
 
@@ -23,9 +23,7 @@ if (missing.length !== 0) {
 }
 
 (async () => {
-  const redisClient = createClient();
-
-  await redisClient.connect();
+  const cache = new Map();
 
   const app = new DiscordApplication({
     clientId: process.env.CLIENT_ID as string,
@@ -33,12 +31,14 @@ if (missing.length !== 0) {
     publicKey: process.env.PUBLIC_KEY as string,
 
     cache: {
-      get: (key: string) => redisClient.get(key),
-      set: (key: string, ttl: number, value: string) => redisClient.setEx(key, ttl, value)
+      get: async (key: string) => cache.get(key),
+      set: async (key: string, ttl: number, value: string) => {
+        cache.set(key, value);
+      }
     }
   });
 
-  await app.commands.register([new Ping(), new Config()]);
+  await app.commands.register(new Ping(), new Config());
 
   const server = fastify();
   server.register(rawBody);
@@ -57,8 +57,8 @@ if (missing.length !== 0) {
       const [response, handling] = app.handleInteraction(req.rawBody, timestamp, signature);
 
       response.then((response) => {
-        if ("getHeaders" in response) {
-          res.headers(response.getHeaders()).code(200).send(response);
+        if (response.constructor.name === "FormData") {
+          res.send(response);
           return;
         }
 

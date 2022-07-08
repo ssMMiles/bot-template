@@ -1,12 +1,11 @@
 import {
   CommandGroupBuilder,
   EmbedBuilder,
-  ICommandGroup,
   MessageBuilder,
   PermissionBits,
-  SlashCommandContext,
   SubcommandOption
-} from "interactions.ts";
+} from "@discord-interactions/builders";
+import { ICommandGroup, SlashCommandContext } from "@discord-interactions/core";
 
 export class Config implements ICommandGroup {
   public builder = new CommandGroupBuilder("config", "Simple config command.")

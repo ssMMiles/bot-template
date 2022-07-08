@@ -1,2 +1,2 @@
-export * from "./Config";
-export * from "./Ping";
+export * from "./Config.js";
+export * from "./Ping.js";

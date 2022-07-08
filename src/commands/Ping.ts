@@ -1,16 +1,13 @@
 import {
   ActionRowBuilder,
-  Button,
   ButtonBuilder,
-  ButtonContext,
   ButtonStyle,
   EmbedBuilder,
-  ISlashCommand,
   MessageBuilder,
   SlashCommandBuilder,
-  SlashCommandContext,
   SlashCommandStringOption
-} from "interactions.ts";
+} from "@discord-interactions/builders";
+import { Button, ButtonContext, ISlashCommand, SlashCommandContext } from "@discord-interactions/core";
 
 type TestButtonState = {
   word: string;
