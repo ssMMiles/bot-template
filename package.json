@@ -16,9 +16,9 @@
   "author": "ssMMiles",
   "license": "MIT",
   "dependencies": {
-    "@discord-interactions/builders": "^0.1.1",
-    "@discord-interactions/core": "^0.1.1",
-    "@discord-interactions/verify-node": "^0.1.1",
+    "@discord-interactions/builders": "^0.2.6",
+    "@discord-interactions/core": "^0.2.6",
+    "@discord-interactions/verify-node": "^0.2.6",
     "discord-api-types": "^0.32.1",
     "dotenv": "^16.0.0",
     "fastify": "^3.27.4",

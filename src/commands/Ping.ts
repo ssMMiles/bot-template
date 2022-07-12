@@ -4,8 +4,7 @@ import {
   ButtonStyle,
   EmbedBuilder,
   MessageBuilder,
-  SlashCommandBuilder,
-  SlashCommandStringOption
+  SlashCommandBuilder
 } from "@discord-interactions/builders";
 import { Button, ButtonContext, ISlashCommand, SlashCommandContext } from "@discord-interactions/core";
 
@@ -14,24 +13,29 @@ type TestButtonState = {
 };
 
 export class Ping implements ISlashCommand {
-  public builder = new SlashCommandBuilder("ping", "Simple ping command.").addStringOption(
-    new SlashCommandStringOption("word", "Enter a word to store with the button.").setRequired(true)
-  );
+  public builder = new SlashCommandBuilder("ping", "Simple ping command.");
 
   public handler = async (ctx: SlashCommandContext): Promise<void> => {
-    const word = ctx.getStringOption("word");
-    const button = await ctx.createComponent("test", { word: word });
+    const button = await ctx.createComponent("pong");
+
+    const now = Date.now();
 
     return ctx.reply(
       new MessageBuilder()
-        .addEmbeds(new EmbedBuilder().setTitle("Pong!"))
+        .addEmbeds(
+          new EmbedBuilder().setTitle(
+            `Pong! Signing --\`\`${ctx.receivedAt.getTime() - ctx.signedAt.getTime()}ms\`\`--> Received --\`\`${
+              now - ctx.receivedAt.getTime()
+            }ms\`\`--> Sending This Response (Total: \`\`${now - ctx.signedAt.getTime()}ms\`\`)`
+          )
+        )
         .addComponents(new ActionRowBuilder().addComponents(button))
     );
   };
 
   public components = [
     new Button(
-      "test",
+      "pong",
       new ButtonBuilder().setEmoji({ name: "🔍" }).setStyle(ButtonStyle.Primary),
       async (ctx: ButtonContext<TestButtonState>): Promise<void> => {
         return ctx.reply(new MessageBuilder().addEmbeds(new EmbedBuilder().setTitle(ctx.state.word)));

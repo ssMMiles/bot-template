@@ -9,9 +9,9 @@ import {
 } from "@discord-interactions/core";
 import "@discord-interactions/verify-node";
 import "dotenv/config";
-import fastify from "fastify";
-import rawBody from "fastify-raw-body";
-import { Config, Ping } from "./commands/index.js";
+import { fastify } from "fastify";
+import { default as rawBody } from "fastify-raw-body";
+import { Ping } from "./commands/index.js";
 
 const keys = ["CLIENT_ID", "TOKEN", "PUBLIC_KEY", "PORT"];
 
@@ -38,7 +38,7 @@ if (missing.length !== 0) {
     }
   });
 
-  await app.commands.register(new Ping(), new Config());
+  await app.commands.register(new Ping());
 
   const server = fastify();
   server.register(rawBody);
@@ -54,9 +54,10 @@ if (missing.length !== 0) {
     }
 
     try {
-      const [response, handling] = app.handleInteraction(req.rawBody, timestamp, signature);
+      const [response, handling] = await app.handleInteraction(req.rawBody, signature, timestamp);
 
       response.then((response) => {
+        // This part is for responding with interactions, and doesn't currently work here.
         if (response.constructor.name === "FormData") {
           res.send(response);
           return;
