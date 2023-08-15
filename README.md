@@ -10,21 +10,21 @@
 
 ## Getting Started
 ### Cloning the repo
-You can either use degit to locally clone this repo without git, or [create your own repo](https://github.com/ssMMiles/discord-interactions-node/generate) and use that.
+You can either use degit to make a copy of the code without the existing git repo, or just [create your own repo](https://github.com/ssMMiles/discord-interactions-node/generate) and use that.
 ```sh
 npx degit ssMMiles/discord-interactions-node
 ```
 
-After that, make sure to install dependencies using npm:
+After that, make sure to install dependencies using npm/yarn:
 ```sh
-npm install
+yarn install
 ```
 
 Copy `.env.example` into `.env` and fill it with your bot's details, and you're set:
 ```sh
-npm run start
+yarn run dev
 
-> bot-template@1.0.2 start
+> bot-template@1.0.3 start
 > node dist/index.js
 
 Listening for interactions on 0.0.0.0:8080

@@ -7,15 +7,14 @@ import {
   UnknownComponentType,
   UnknownInteractionType
 } from "@discord-interactions/core";
-import "@discord-interactions/verify-node";
+import "@discord-interactions/verify";
 import "dotenv/config";
 import { fastify } from "fastify";
 import { default as rawBody } from "fastify-raw-body";
 import { Ping } from "./commands/index.js";
 
-const keys = ["CLIENT_ID", "TOKEN", "PUBLIC_KEY", "PORT"];
-
-const missing = keys.filter((key) => !(key in process.env));
+const REQUIRED_KEYS = ["CLIENT_ID", "TOKEN", "PUBLIC_KEY"];
+const missing = REQUIRED_KEYS.filter((key) => !(key in process.env));
 
 if (missing.length !== 0) {
   console.error(`Missing Enviroment Variable${missing.length > 1 ? "s" : ""}: ${missing.join(", ")}`);
@@ -41,7 +40,7 @@ if (missing.length !== 0) {
   await app.commands.register(new Ping());
 
   const server = fastify();
-  server.register(rawBody);
+  await server.register(rawBody);
 
   server.post("/", async (req, res) => {
     const signature = req.headers["x-signature-ed25519"];
@@ -101,9 +100,13 @@ if (missing.length !== 0) {
     }
   });
 
-  const address = "0.0.0.0";
-  const port = process.env.PORT as string;
+  const host = process.env.HOST ?? "0.0.0.0";
+  const port = Number(process.env.PORT ?? 8080);
 
-  server.listen(port, address);
-  console.log(`Listening for interactions on ${address}:${port}.`);
+  server.listen({
+    host,
+    port
+  });
+
+  console.log(`Listening for interactions on ${host}:${port}.`);
 })();
